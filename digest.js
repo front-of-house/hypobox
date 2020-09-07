@@ -1,58 +1,73 @@
-const { aliases }  = require('./aliases')
+const { aliases, percentOrPixel } = require("./aliases");
 
-function digest (
-  props,
-  theme
-) {
-  let style = {
-    position: 'relative'
-  }
-  let attr = {}
+// assumes valid CSS properties at this point
+function toStyleObject(props, theme) {
+  let style = {};
 
-  for (const rawProp of Object.keys(props)) {
-    const config = aliases[rawProp]
-
-    if (!config) {
-      attr[rawProp] = props[rawProp]
-      continue
-    }
-
-    const { properties, scale, defaultValue, unit } = config
-    const rawValues = [].concat(props[rawProp])
+  for (const prop of Object.keys(props)) {
+    const { properties, scale, defaultValue, unit } = aliases[prop] || {
+      properties: [prop],
+      unit: percentOrPixel
+    };
+    const rawValues = [].concat(props[prop]);
 
     for (let i = 0; i < rawValues.length; i++) {
       const v =
-        typeof rawValues[i] === 'boolean'
-          ? defaultValue || 'true'
-          : rawValues[i]
-      const breakpoint = i > 0 ? theme.breakpoints[i - 1] : undefined
+        typeof rawValues[i] === "boolean"
+          ? defaultValue || "true"
+          : rawValues[i];
+      const breakpoint = i > 0 ? theme.breakpoints[i - 1] : undefined;
 
       let value =
         // @ts-ignore
-        scale && theme[scale] && theme[scale][v] ? theme[scale][v] : v
+        scale && theme[scale] && theme[scale][v] ? theme[scale][v] : v;
 
-      if (typeof value === 'number' && unit) {
-        value = unit(value)
+      if (typeof value === "number" && unit) {
+        value = unit(value);
       }
 
       for (const p of properties) {
         if (breakpoint) {
-          const media = `@media screen and (min-width: ${breakpoint})`
+          const media = `@media screen and (min-width: ${breakpoint})`;
           style[media] = {
             ...(style[media] || {}),
-            [p]: value
-          }
+            [p]: value,
+          };
         } else {
-          style[p] = value
+          style[p] = value;
         }
       }
     }
   }
 
-  return {
-    style,
-    attr
-  }
+  return style;
 }
 
-module.exports = { digest }
+function digest(props, theme) {
+  let attributes = {};
+  let style = {};
+
+  // filters properties that are a part of the library vs other html attr
+  for (const prop of Object.keys(props)) {
+    const v = props[prop];
+
+    if (!aliases[prop]) {
+      attributes[prop] = v;
+    } else {
+      style[prop] = v;
+    }
+  }
+
+  return {
+    style: toStyleObject(
+      {
+        position: "relative",
+        ...style,
+      },
+      theme
+    ),
+    attributes,
+  };
+}
+
+module.exports = { digest, toStyleObject };

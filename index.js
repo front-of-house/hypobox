@@ -2,7 +2,7 @@ const { h } = require('hyposcript')
 const { driver } = require('styletron-standard')
 const { Server } = require('styletron-engine-atomic')
 
-const { digest } = require('./digest')
+const { digest, toStyleObject } = require('./digest')
 const { theme } = require('./theme')
 const { aliases } = require('./aliases')
 
@@ -30,22 +30,23 @@ function Box ({
   ...props
 }) {
   const { theme, toClassname } = context
-  const { style, attr } = digest(props, theme)
+  const { style, attributes } = digest(props, theme)
 
   return h(as, {
     class: [
       cn || '',
       toClassname(style),
-      css ? toClassname(typeof css === 'function' ? css(theme) : css) : ''
+      css ? toClassname(toStyleObject(typeof css === 'function' ? css(theme) : css, theme)) : ''
     ]
       .filter(Boolean)
       .join(' '),
-    ...attr
+    ...attributes
   })
 }
 
 module.exports = {
   digest,
+  toStyleObject,
   aliases,
   getCss,
   configure,

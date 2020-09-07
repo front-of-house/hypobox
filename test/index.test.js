@@ -55,4 +55,23 @@ module.exports = (test, assert) => {
 
     assert(/width:500px/.test(css))
   })
+
+  test('with as', () => {
+    const html = (
+      <Box>
+        <Box as="img" src="" />
+      </Box>
+    );
+
+    assert(/img.+src/.test(html))
+  })
+
+  test('css with media query', () => {
+    const html = (
+      <Box css={{ maxWidth: [1, 1/2, 1/3] }} />
+    );
+
+    const css = getCss()
+    assert(/@media.+max-width:33.33/.test(css))
+  })
 }

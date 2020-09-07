@@ -6,6 +6,10 @@ function str (v) {
   return v + ''
 }
 
+function percentOrPixel(v) {
+  return v <= 1 ? v * 100 + '%' : v + 'px'
+}
+
 const aliases = {
   c: {
     properties: ['color'],
@@ -177,16 +181,12 @@ const aliases = {
     properties: ['width'],
     scale: 'width',
     defaultValue: '100%',
-    unit (v) {
-      return v <= 1 ? v * 100 + '%' : v + 'px'
-    }
+    unit: percentOrPixel,
   },
   h: {
     properties: ['height'],
     defaultValue: '100%',
-    unit (v) {
-      return v <= 1 ? v * 100 + '%' : v + 'px'
-    }
+    unit: percentOrPixel,
   },
   fill: {
     properties: ['top', 'bottom', 'left', 'right'],
@@ -218,4 +218,4 @@ const aliases = {
   }
 }
 
-module.exports = { aliases }
+module.exports = { str, px, percentOrPixel, aliases }
