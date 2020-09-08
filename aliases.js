@@ -188,6 +188,11 @@ const aliases = {
     defaultValue: '100%',
     unit: percentOrPixel,
   },
+  mw: {
+    properties: ['maxWidth'],
+    scale: 'width',
+    unit: percentOrPixel,
+  },
   fill: {
     properties: ['top', 'bottom', 'left', 'right'],
     defaultValue: '0'
