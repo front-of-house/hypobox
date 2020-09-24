@@ -1,5 +1,5 @@
 const theme = {
-  space: [0, 2, 4, 8, 16, 32, 48, 64],
+  space: [0, 2, 4, 8, 16, 32, 48, 64, 96],
   breakpoints: ['400px', '800px', '1200px'],
   fontSize: ['3rem', '3rem', '2.2rem', '1.8rem', '1.4rem', '1rem', '0.875rem'],
   fontWeight: [

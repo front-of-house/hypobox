@@ -193,7 +193,7 @@ const aliases = {
     scale: 'width',
     unit: percentOrPixel,
   },
-  fill: {
+  cover: {
     properties: ['top', 'bottom', 'left', 'right'],
     defaultValue: '0'
   },
