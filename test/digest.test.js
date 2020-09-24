@@ -150,4 +150,16 @@ module.exports = (test, assert) => {
       '8px'
     )
   })
+
+  test('negative ints', () => {
+    const { style, attr } = digest(
+      {
+        top: -1
+      },
+      {
+        space: [0, 2]
+      }
+    )
+    assert.equal(style.top, '-2px')
+  })
 }

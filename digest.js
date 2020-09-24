@@ -16,14 +16,16 @@ function toStyleObject(props, theme) {
         typeof rawValues[i] === "boolean"
           ? defaultValue || "true"
           : rawValues[i];
+      const negative = v < 0
+      const key = typeof v === 'number' ? Math.abs(v) : v
       const breakpoint = i > 0 ? theme.breakpoints[i - 1] : undefined;
 
       let value =
         // @ts-ignore
-        scale && theme[scale] && theme[scale][v] ? theme[scale][v] : v;
+        scale && theme[scale] && theme[scale][key] ? theme[scale][key] : key;
 
       if (typeof value === "number" && unit) {
-        value = unit(value);
+        value = unit(value * (negative ? -1 : 1));
       }
 
       for (const p of properties) {
