@@ -45,6 +45,7 @@ function Box ({
 }
 
 module.exports = {
+  theme,
   digest,
   toStyleObject,
   aliases,
