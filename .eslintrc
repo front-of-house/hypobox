@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "react": {
+      "pragma": "h",
+      "pragmaFrag": "h",
+    }
+  },
+}
