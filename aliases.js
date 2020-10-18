@@ -27,13 +27,13 @@ const aliases = {
     properties: ['flexWrap'],
     defaultValue: 'wrap'
   },
-  aic: {
-    properties: ['alignItems'],
-    defaultValue: 'center'
-  },
   ais: {
     properties: ['alignItems'],
     defaultValue: 'flex-start'
+  },
+  aic: {
+    properties: ['alignItems'],
+    defaultValue: 'center'
   },
   aie: {
     properties: ['alignItems'],
@@ -43,13 +43,13 @@ const aliases = {
     properties: ['justifyContent'],
     defaultValue: 'flex-start'
   },
-  jce: {
-    properties: ['justifyContent'],
-    defaultValue: 'flex-end'
-  },
   jcc: {
     properties: ['justifyContent'],
     defaultValue: 'center'
+  },
+  jce: {
+    properties: ['justifyContent'],
+    defaultValue: 'flex-end'
   },
   jcb: {
     properties: ['justifyContent'],
@@ -177,26 +177,6 @@ const aliases = {
     properties: ['position'],
     defaultValue: 'fixed'
   },
-  w: {
-    properties: ['width'],
-    scale: 'width',
-    defaultValue: '100%',
-    unit: percentOrPixel
-  },
-  h: {
-    properties: ['height'],
-    defaultValue: '100%',
-    unit: percentOrPixel
-  },
-  mw: {
-    properties: ['maxWidth'],
-    scale: 'width',
-    unit: percentOrPixel
-  },
-  cover: {
-    properties: ['top', 'bottom', 'left', 'right'],
-    defaultValue: '0'
-  },
   top: {
     properties: ['top'],
     scale: 'space',
@@ -220,6 +200,26 @@ const aliases = {
     scale: 'space',
     defaultValue: '0px',
     unit: px
+  },
+  cover: {
+    properties: ['top', 'bottom', 'left', 'right'],
+    defaultValue: '0'
+  },
+  w: {
+    properties: ['width'],
+    scale: 'width',
+    defaultValue: '100%',
+    unit: percentOrPixel
+  },
+  h: {
+    properties: ['height'],
+    defaultValue: '100%',
+    unit: percentOrPixel
+  },
+  mw: {
+    properties: ['maxWidth'],
+    scale: 'width',
+    unit: percentOrPixel
   }
 }
 
