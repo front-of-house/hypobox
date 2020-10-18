@@ -2,12 +2,12 @@ const { digest, theme } = require('../')
 
 module.exports = (test, assert) => {
   test('base style', () => {
-    const { style, attr } = digest({}, theme)
+    const { style } = digest({}, theme)
     assert.equal(style.position, 'relative')
   })
 
   test('no units', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         o: 0,
         z: 0
@@ -19,7 +19,7 @@ module.exports = (test, assert) => {
   })
 
   test('scale by index', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         pl: 0,
         w: 0
@@ -34,7 +34,7 @@ module.exports = (test, assert) => {
   })
 
   test('px value off scale', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         pl: 10,
         w: 300
@@ -49,7 +49,7 @@ module.exports = (test, assert) => {
   })
 
   test('px value ignores string', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         pl: '20px',
         w: '300px'
@@ -64,7 +64,7 @@ module.exports = (test, assert) => {
   })
 
   test('width 50%', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         w: 1 / 2
       },
@@ -73,7 +73,7 @@ module.exports = (test, assert) => {
     assert.equal(style.width, '50%')
   })
   test('width 100%', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         w: 1
       },
@@ -83,7 +83,7 @@ module.exports = (test, assert) => {
   })
 
   test('object scale', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         pl: 'sm',
         w: 'sm'
@@ -98,7 +98,7 @@ module.exports = (test, assert) => {
   })
 
   test('booleans', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         top: true,
         f: true
@@ -110,7 +110,7 @@ module.exports = (test, assert) => {
   })
 
   test('positioning', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         top: 0
       },
@@ -122,7 +122,7 @@ module.exports = (test, assert) => {
   })
 
   test('multi-prop', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         px: [0, 1, 2]
       },
@@ -152,7 +152,7 @@ module.exports = (test, assert) => {
   })
 
   test('negative ints', () => {
-    const { style, attr } = digest(
+    const { style } = digest(
       {
         top: -1
       },

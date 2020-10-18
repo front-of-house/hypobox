@@ -1,11 +1,10 @@
+/* eslint-disable no-unused-expressions */
 const { h } = require('hyposcript')
 const { Box, configure, getCss } = require('../')
 
 module.exports = (test, assert) => {
   test('property', () => {
-    ;(
-      <Box o={1} />
-    );
+    ;<Box o={1} />
 
     const css = getCss()
 
@@ -20,13 +19,10 @@ module.exports = (test, assert) => {
         }
       }
     })
-
-    ;(
-      <div>
-        <Box c="blue" />
-        <Box c="r" />
-      </div>
-    );
+    ;<div>
+      <Box c='blue' />
+      <Box c='r' />
+    </div>
 
     const css = getCss()
 
@@ -35,9 +31,7 @@ module.exports = (test, assert) => {
   })
 
   test('with default value', () => {
-    ;(
-      <Box f />
-    );
+    ;<Box f />
 
     const css = getCss()
 
@@ -45,11 +39,9 @@ module.exports = (test, assert) => {
   })
 
   test('with default value and scale', () => {
-    ;(
-      <Box w>
-        <Box w="500px" />
-      </Box>
-    );
+    ;<Box w>
+      <Box w='500px' />
+    </Box>
 
     const css = getCss()
 
@@ -59,17 +51,15 @@ module.exports = (test, assert) => {
   test('with as', () => {
     const html = (
       <Box>
-        <Box as="img" src="" />
+        <Box as='img' src='' />
       </Box>
-    );
+    )
 
     assert(/img.+src/.test(html))
   })
 
   test('css with media query', () => {
-    const html = (
-      <Box css={{ maxWidth: [1, 1/2, 1/3] }} />
-    );
+    ;<Box css={{ maxWidth: [1, 1 / 2, 1 / 3] }} />
 
     const css = getCss()
     assert(/@media.+max-width:33.33/.test(css))

@@ -14,10 +14,9 @@ require('@babel/register')({
 const test = require('baretest')('hypobox')
 const assert = require('assert')
 
-require('./test/index.test.js')(test, assert)
-require('./test/digest.test.js')(test, assert)
-
-!(async function () {
+require('./index.test.js')(test, assert)
+require('./digest.test.js')(test, assert)
+;(async function () {
   await test.run()
   console.timeEnd('test')
 })()

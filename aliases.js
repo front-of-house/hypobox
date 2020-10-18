@@ -6,7 +6,7 @@ function str (v) {
   return v + ''
 }
 
-function percentOrPixel(v) {
+function percentOrPixel (v) {
   return v <= 1 ? v * 100 + '%' : v + 'px'
 }
 
@@ -181,17 +181,17 @@ const aliases = {
     properties: ['width'],
     scale: 'width',
     defaultValue: '100%',
-    unit: percentOrPixel,
+    unit: percentOrPixel
   },
   h: {
     properties: ['height'],
     defaultValue: '100%',
-    unit: percentOrPixel,
+    unit: percentOrPixel
   },
   mw: {
     properties: ['maxWidth'],
     scale: 'width',
-    unit: percentOrPixel,
+    unit: percentOrPixel
   },
   cover: {
     properties: ['top', 'bottom', 'left', 'right'],

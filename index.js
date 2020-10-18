@@ -19,16 +19,11 @@ function getCss () {
   return styletron.getCss()
 }
 
-function configure({ theme: t }) {
+function configure ({ theme: t }) {
   context.theme = t ? { ...theme, ...t } : theme
 }
 
-function Box ({
-  as = 'div',
-  className: cn = '',
-  css,
-  ...props
-}) {
+function Box ({ as = 'div', className: cn = '', css, ...props }) {
   const { theme, toClassname } = context
   const { style, attributes } = digest(props, theme)
 
@@ -36,7 +31,11 @@ function Box ({
     class: [
       cn || '',
       toClassname(style),
-      css ? toClassname(toStyleObject(typeof css === 'function' ? css(theme) : css, theme)) : ''
+      css
+        ? toClassname(
+            toStyleObject(typeof css === 'function' ? css(theme) : css, theme)
+          )
+        : ''
     ]
       .filter(Boolean)
       .join(' '),
