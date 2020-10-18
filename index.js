@@ -23,13 +23,20 @@ function configure ({ theme: t }) {
   context.theme = t ? { ...theme, ...t } : theme
 }
 
-function Box ({ as = 'div', className: cn = '', css, ...props }) {
+function Box ({
+  as = 'div',
+  class: cn = '',
+  className: cN = '',
+  css,
+  ...props
+}) {
   const { theme, toClassname } = context
   const { style, attributes } = digest(props, theme)
 
   return h(as, {
     class: [
       cn || '',
+      cN || '',
       toClassname(style),
       css
         ? toClassname(

@@ -64,4 +64,16 @@ module.exports = (test, assert) => {
     const css = getCss()
     assert(/@media.+max-width:33.33/.test(css))
   })
+
+  test('class', () => {
+    const html = <Box class='foo' w={10} />
+
+    assert(/foo\s/.test(html))
+  })
+
+  test('className', () => {
+    const html = <Box className='foo' w={10} />
+
+    assert(/foo\s/.test(html))
+  })
 }
