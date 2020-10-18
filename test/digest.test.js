@@ -162,4 +162,50 @@ module.exports = (test, assert) => {
     )
     assert.equal(style.top, '-2px')
   })
+
+  test('exploded props', () => {
+    const { style } = digest(
+      {
+        p: 1,
+        m: 1
+      },
+      {
+        space: [0, 2]
+      }
+    )
+    assert.equal(style.paddingTop, '2px')
+    assert.equal(style.paddingBottom, '2px')
+    assert.equal(style.paddingLeft, '2px')
+    assert.equal(style.paddingRight, '2px')
+
+    assert.equal(style.marginTop, '2px')
+    assert.equal(style.marginBottom, '2px')
+    assert.equal(style.marginLeft, '2px')
+    assert.equal(style.marginRight, '2px')
+  })
+
+  test('margin/padding precendence', () => {
+    const { style } = digest(
+      {
+        pl: 0,
+        p: 1,
+        pr: 0,
+        ml: 0,
+        m: 1,
+        mr: 0
+      },
+      {
+        space: [0, 2]
+      }
+    )
+    assert.equal(style.paddingTop, '2px')
+    assert.equal(style.paddingBottom, '2px')
+    assert.equal(style.paddingLeft, '2px')
+    assert.equal(style.paddingRight, '0px')
+
+    assert.equal(style.marginTop, '2px')
+    assert.equal(style.marginBottom, '2px')
+    assert.equal(style.marginLeft, '2px')
+    assert.equal(style.marginRight, '0px')
+  })
 }

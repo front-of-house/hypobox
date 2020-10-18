@@ -60,7 +60,7 @@ const aliases = {
     unit: str
   },
   m: {
-    properties: ['margin'],
+    properties: ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'],
     scale: 'space',
     unit: px
   },
@@ -95,7 +95,7 @@ const aliases = {
     unit: px
   },
   p: {
-    properties: ['padding'],
+    properties: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
     scale: 'space',
     unit: px
   },
