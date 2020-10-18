@@ -18,6 +18,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Installing dependencies
+        run: npm i
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

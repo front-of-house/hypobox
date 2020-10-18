@@ -1,16 +1,9 @@
 name: Lint & Test
 
 on:
-  push:
-    branches:
-      - master
-      - next
-      - beta
   pull_request:
     branches:
-      - master
-      - next
-      - beta
+      - '**'
 
 jobs:
   build:
