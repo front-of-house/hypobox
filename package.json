@@ -39,7 +39,7 @@
     "semantic-release": "^17.2.1"
   },
   "dependencies": {
-    "hyposcript": "^1.0.0",
+    "hyposcript": "^1.0.1",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-standard": "^3.0.4"
   },
