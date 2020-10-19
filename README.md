@@ -1,4 +1,6 @@
-# hypobox ![npm](https://img.shields.io/npm/v/hypobox)
+![hypobox](https://user-images.githubusercontent.com/4732330/96394851-af58f800-1188-11eb-8922-6a3a555d74fd.png)
+
+<br/>
 
 Hyper minimal [hyposcript](https://github.com/sure-thing/hyposcript) `Box`
 component, built with [styletron](https://www.styletron.org/).
@@ -6,18 +8,6 @@ component, built with [styletron](https://www.styletron.org/).
 ```bash
 npm i hypobox
 ```
-
-#### Contents
-
-- [Overview](#overview)
-  - [Property Shorthands](#property-shorthands)
-  - [`as` prop](#as-prop)
-  - [Reponsive Props](#responsive-props)
-- [Usage](#usage)
-  - [Using Your Theme](#using-your-theme)
-  - [Rendering a Template](#rendering-a-template)
-- [FAQ](#faq)
-- [List of Property Shorthands](#list-of-property-shorthands)
 
 #### Example
 
