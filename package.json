@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "hyposcript": "^1.0.1",
+    "hypostyle": "^0.4.2",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-standard": "^3.0.4"
   },

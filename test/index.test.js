@@ -3,15 +3,15 @@ const { h } = require('hyposcript')
 const { Box, configure, getCss } = require('../')
 
 module.exports = (test, assert) => {
-  test('property', () => {
-    ;<Box o={1} />
-
+  test('base', () => {
+    const html = <Box o={1} style={{ background: 'blue' }} />
     const css = getCss()
 
     assert(/order:1/.test(css))
+    assert(/style.+background/.test(html))
   })
 
-  test('with scale', () => {
+  test('configure custom theme', () => {
     configure({
       theme: {
         color: {
@@ -30,32 +30,54 @@ module.exports = (test, assert) => {
     assert(/color:red/.test(css))
   })
 
-  test('with default value', () => {
-    ;<Box f />
+  test('shorthands', () => {
+    configure({
+      theme: {
+        shorthands: {
+          short: {
+            color: '#ff4567'
+          }
+        }
+      }
+    })
+    ;<Box f short />
 
     const css = getCss()
 
     assert(/display:flex/.test(css))
+    assert(/color:#ff4567/.test(css))
   })
 
-  test('with default value and scale', () => {
-    ;<Box w>
-      <Box w='500px' />
-    </Box>
+  test('variants', () => {
+    configure({
+      theme: {
+        variants: {
+          type: {
+            primary: {
+              color: '#ff4567'
+            }
+          }
+        }
+      }
+    })
+    ;<Box type='primary' />
 
     const css = getCss()
 
-    assert(/width:500px/.test(css))
+    assert(/color:#ff4567/.test(css))
   })
 
   test('with as', () => {
-    const html = (
-      <Box>
-        <Box as='img' src='' />
-      </Box>
-    )
+    const html = <Box as='img' src='' />
 
     assert(/img.+src/.test(html))
+  })
+
+  test('css', () => {
+    ;<Box css={{ c: 'blue' }} />
+
+    const css = getCss()
+    assert(/color:blue/.test(css))
   })
 
   test('css with media query', () => {
@@ -63,6 +85,13 @@ module.exports = (test, assert) => {
 
     const css = getCss()
     assert(/@media.+max-width:33.33/.test(css))
+  })
+
+  test('css as fn', () => {
+    ;<Box css={theme => ({ pt: theme.space[1] + 'px' })} />
+
+    const css = getCss()
+    assert(/padding-top:4px/.test(css))
   })
 
   test('class', () => {
