@@ -84,7 +84,7 @@ module.exports = (test, assert) => {
     ;<Box css={{ maxWidth: [1, 1 / 2, 1 / 3] }} />
 
     const css = getCss()
-    assert(/@media.+max-width:33.33/.test(css))
+    assert(/@media(.|\n)+max-width:33.33/.test(css))
   })
 
   test('css as fn', () => {
