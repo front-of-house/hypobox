@@ -9,15 +9,20 @@ const { addon: keyframes } = require('nano-css/addon/keyframes')
 const { addon: rule } = require('nano-css/addon/rule')
 const { addon: globalAddon } = require('nano-css/addon/global')
 
-const nano = create()
-
-cache(nano)
-nesting(nano)
-keyframes(nano)
-rule(nano)
-globalAddon(nano)
-
+let nano = createNano()
 let context = hypostyle(defaults)
+
+function createNano () {
+  const nano = create()
+
+  cache(nano)
+  nesting(nano)
+  keyframes(nano)
+  rule(nano)
+  globalAddon(nano)
+
+  return nano
+}
 
 function configure (props) {
   const tokens = {
@@ -41,12 +46,12 @@ function configure (props) {
   }
 
   context = {
-    tokens,
+    theme,
     ...hypostyle(theme)
   }
 }
 
-function cxn (style) {
+function css (style) {
   return nano.rule(style)
 }
 
@@ -54,9 +59,17 @@ function injectGlobal (style) {
   return nano.global(context.css(style))
 }
 
-// TODO will this leak?
-function get () {
-  return nano.raw
+function flush () {
+  context = {
+    theme: context.theme,
+    ...hypostyle(context.theme)
+  }
+
+  const raw = nano.raw
+
+  nano = createNano()
+
+  return raw
 }
 
 function Box ({
@@ -66,22 +79,24 @@ function Box ({
   css: block,
   ...props
 }) {
-  const { css: parseHypostyle, pick, tokens } = context
+  const { css: parseHypostyle, pick, theme } = context
 
   const cleaned = pick(props)
   const styles = Object.keys(cleaned.styles || {}).length
     ? parseHypostyle(cleaned.styles)
     : undefined
   const blockStyles = block
-    ? parseHypostyle(typeof block === 'function' ? block(tokens) : block || {})
+    ? parseHypostyle(
+        typeof block === 'function' ? block(theme.tokens) : block || {}
+      )
     : undefined
 
   return h(as, {
     class: [
       cn || '',
       cN || '',
-      styles && cxn(styles),
-      blockStyles && cxn(blockStyles)
+      styles && css(styles),
+      blockStyles && css(blockStyles)
     ]
       .filter(Boolean)
       .map(s => s.trim())
@@ -91,10 +106,10 @@ function Box ({
 }
 
 module.exports = {
-  keyframes: nano.keyframes,
-  css: cxn,
-  injectGlobal,
-  getCss: get,
   configure,
-  Box
+  Box,
+  css,
+  injectGlobal,
+  keyframes: nano.keyframes,
+  flush
 }

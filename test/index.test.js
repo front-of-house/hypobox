@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 const { h } = require('hyposcript')
-const { Box, configure, getCss, injectGlobal } = require('../')
+const { Box, configure, flush, injectGlobal } = require('../')
 
 module.exports = (test, assert) => {
   test('no styles', () => {
@@ -10,7 +10,7 @@ module.exports = (test, assert) => {
 
   test('base', () => {
     const html = <Box o={1} style={{ background: 'blue' }} />
-    const css = getCss()
+    const css = flush()
 
     assert(/order:1/.test(css))
     assert(/style.+background/.test(html))
@@ -29,7 +29,7 @@ module.exports = (test, assert) => {
       <Box c='r' />
     </div>
 
-    const css = getCss()
+    const css = flush()
 
     assert(/color:blue/.test(css))
     assert(/color:red/.test(css))
@@ -45,7 +45,7 @@ module.exports = (test, assert) => {
     })
     ;<Box f short />
 
-    const css = getCss()
+    const css = flush()
 
     assert(/display:flex/.test(css))
     assert(/color:#ff4567/.test(css))
@@ -53,19 +53,17 @@ module.exports = (test, assert) => {
 
   test('variants', () => {
     configure({
-      tokens: {
-        variants: {
-          type: {
-            primary: {
-              color: '#ff4567'
-            }
+      variants: {
+        type: {
+          primary: {
+            color: '#ff4567'
           }
         }
       }
     })
     ;<Box type='primary' />
 
-    const css = getCss()
+    const css = flush()
 
     assert(/color:#ff4567/.test(css))
   })
@@ -79,21 +77,21 @@ module.exports = (test, assert) => {
   test('css', () => {
     ;<Box css={{ c: 'blue' }} />
 
-    const css = getCss()
+    const css = flush()
     assert(/color:blue/.test(css))
   })
 
   test('css with media query', () => {
     ;<Box css={{ maxWidth: [1, 1 / 2, 1 / 3] }} />
 
-    const css = getCss()
+    const css = flush()
     assert(/@media(.|\n)+max-width:33.33/.test(css))
   })
 
   test('css as fn', () => {
     ;<Box css={tokens => ({ pt: tokens.space[1] + 'px' })} />
 
-    const css = getCss()
+    const css = flush()
     assert(/padding-top:4px/.test(css))
   })
 
@@ -112,7 +110,7 @@ module.exports = (test, assert) => {
   test('injectGlobal', () => {
     injectGlobal({ '.global': { c: 'blue' } })
 
-    const css = getCss()
+    const css = flush()
 
     assert(/global(.|\n)+color:blue/.test(css))
   })
