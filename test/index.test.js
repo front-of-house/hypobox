@@ -3,6 +3,11 @@ const { h } = require('hyposcript')
 const { Box, configure, getCss } = require('../')
 
 module.exports = (test, assert) => {
+  test('no styles', () => {
+    const html = <Box />
+    assert(/class=""/.test(html))
+  })
+
   test('base', () => {
     const html = <Box o={1} style={{ background: 'blue' }} />
     const css = getCss()

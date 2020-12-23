@@ -62,14 +62,22 @@ function Box ({
   const { css: parseHypostyle, pick, tokens } = context
 
   const cleaned = pick(props)
-  const styles = parseHypostyle(cleaned.styles)
-  const blockStyles = parseHypostyle(
-    typeof block === 'function' ? block(tokens) : block || {}
-  )
+  const styles = Object.keys(cleaned.styles || {}).length
+    ? parseHypostyle(cleaned.styles)
+    : undefined
+  const blockStyles = block
+    ? parseHypostyle(typeof block === 'function' ? block(tokens) : block || {})
+    : undefined
 
   return h(as, {
-    class: [cn || '', cN || '', cxn(styles), cxn(blockStyles)]
+    class: [
+      cn || '',
+      cN || '',
+      styles && cxn(styles),
+      blockStyles && cxn(blockStyles)
+    ]
       .filter(Boolean)
+      .map(s => s.trim())
       .join(' '),
     ...cleaned.props
   })
