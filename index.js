@@ -7,6 +7,7 @@ const { addon: cache } = require('nano-css/addon/cache')
 const { addon: nesting } = require('nano-css/addon/nesting')
 const { addon: keyframes } = require('nano-css/addon/keyframes')
 const { addon: rule } = require('nano-css/addon/rule')
+const { addon: globalAddon } = require('nano-css/addon/global')
 
 const nano = create()
 
@@ -14,6 +15,7 @@ cache(nano)
 nesting(nano)
 keyframes(nano)
 rule(nano)
+globalAddon(nano)
 
 let context = hypostyle(defaults)
 
@@ -48,6 +50,11 @@ function cxn (style) {
   return nano.rule(style)
 }
 
+function injectGlobal (style) {
+  nano.global(style)
+}
+
+// TODO will this leak?
 function get () {
   return nano.raw
 }
@@ -86,6 +93,7 @@ function Box ({
 module.exports = {
   keyframes: nano.keyframes,
   css: cxn,
+  injectGlobal,
   getCss: get,
   configure,
   Box

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 const { h } = require('hyposcript')
-const { Box, configure, getCss } = require('../')
+const { Box, configure, getCss, injectGlobal } = require('../')
 
 module.exports = (test, assert) => {
   test('no styles', () => {
@@ -107,5 +107,11 @@ module.exports = (test, assert) => {
     const html = <Box className='foo' w={10} />
 
     assert(/foo\s/.test(html))
+  })
+
+  test('injectGlobal', () => {
+    injectGlobal({ '.global': { color: 'blue' } })
+
+    assert(/global\s/.test(getCss()))
   })
 }
