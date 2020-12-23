@@ -52,7 +52,7 @@ function configure (props) {
 }
 
 function css (style) {
-  return nano.rule(style)
+  return nano.rule(context.css(style))
 }
 
 function injectGlobal (style) {
