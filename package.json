@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "hyposcript": "^1.0.1",
-    "hypostyle": "^0.4.2",
+    "hypostyle": "^1.0.0",
     "nano-css": "^5.3.0"
   },
   "config": {

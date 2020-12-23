@@ -11,9 +11,9 @@ module.exports = (test, assert) => {
     assert(/style.+background/.test(html))
   })
 
-  test('configure custom theme', () => {
+  test('configure custom tokens', () => {
     configure({
-      theme: {
+      tokens: {
         color: {
           r: 'red' // custom value
         }
@@ -30,13 +30,11 @@ module.exports = (test, assert) => {
     assert(/color:red/.test(css))
   })
 
-  test('shorthands', () => {
+  test('macros', () => {
     configure({
-      theme: {
-        shorthands: {
-          short: {
-            color: '#ff4567'
-          }
+      macros: {
+        short: {
+          color: '#ff4567'
         }
       }
     })
@@ -50,7 +48,7 @@ module.exports = (test, assert) => {
 
   test('variants', () => {
     configure({
-      theme: {
+      tokens: {
         variants: {
           type: {
             primary: {
@@ -88,7 +86,7 @@ module.exports = (test, assert) => {
   })
 
   test('css as fn', () => {
-    ;<Box css={theme => ({ pt: theme.space[1] + 'px' })} />
+    ;<Box css={tokens => ({ pt: tokens.space[1] + 'px' })} />
 
     const css = getCss()
     assert(/padding-top:4px/.test(css))

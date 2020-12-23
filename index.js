@@ -1,5 +1,6 @@
 const { h } = require('hyposcript')
-const { hypostyle, pick } = require('hypostyle')
+const { hypostyle } = require('hypostyle')
+const defaults = require('hypostyle/presets/default')
 
 const { create } = require('nano-css')
 const { addon: cache } = require('nano-css/addon/cache')
@@ -14,17 +15,40 @@ nesting(nano)
 keyframes(nano)
 rule(nano)
 
-const context = {}
+let context = hypostyle(defaults)
 
-function configure ({ theme: t }) {
-  context.theme = t
+function configure (props) {
+  const tokens = {
+    ...defaults.tokens,
+    ...(props.tokens || {})
+  }
+  const theme = {
+    tokens,
+    shorthands: {
+      ...defaults.shorthands,
+      ...(props.shorthands || {})
+    },
+    macros: {
+      ...defaults.macros,
+      ...(props.macros || {})
+    },
+    variants: {
+      ...defaults.variants,
+      ...(props.variants || {})
+    }
+  }
+
+  context = {
+    tokens,
+    ...hypostyle(theme)
+  }
 }
 
-function toClassname (style) {
+function cxn (style) {
   return nano.rule(style)
 }
 
-function getCss () {
+function get () {
   return nano.raw
 }
 
@@ -32,24 +56,19 @@ function Box ({
   as = 'div',
   class: cn = '',
   className: cN = '',
-  css,
+  css: block,
   ...props
 }) {
-  const cleaned = pick(props, context.theme)
-  const { styles, theme } = hypostyle(cleaned.styles, context.theme)
+  const { css: parseHypostyle, pick, tokens } = context
+
+  const cleaned = pick(props)
+  const styles = parseHypostyle(cleaned.styles)
+  const blockStyles = parseHypostyle(
+    typeof block === 'function' ? block(tokens) : block || {}
+  )
 
   return h(as, {
-    class: [
-      cn || '',
-      cN || '',
-      toClassname(styles),
-      css
-        ? toClassname(
-            hypostyle(typeof css === 'function' ? css(theme) : css, theme)
-              .styles
-          )
-        : ''
-    ]
+    class: [cn || '', cN || '', cxn(styles), cxn(blockStyles)]
       .filter(Boolean)
       .join(' '),
     ...cleaned.props
@@ -58,7 +77,8 @@ function Box ({
 
 module.exports = {
   keyframes: nano.keyframes,
-  getCss,
+  css: cxn,
+  getCss: get,
   configure,
   Box
 }
