@@ -1,61 +1,115 @@
 const { h } = require('hyposcript')
-const { driver } = require('styletron-standard')
-const { Server } = require('styletron-engine-atomic')
+const { hypostyle } = require('hypostyle')
+const defaults = require('hypostyle/presets/default')
 
-const { digest, toStyleObject } = require('./digest')
-const { theme } = require('./theme')
-const { aliases } = require('./aliases')
+const { create } = require('nano-css')
+const { addon: cache } = require('nano-css/addon/cache')
+const { addon: nesting } = require('nano-css/addon/nesting')
+const { addon: keyframes } = require('nano-css/addon/keyframes')
+const { addon: rule } = require('nano-css/addon/rule')
+const { addon: globalAddon } = require('nano-css/addon/global')
 
-const styletron = new Server()
+let nano = createNano()
+let context = hypostyle(defaults)
 
-const context = {
-  theme,
-  toClassname (style) {
-    return driver(style, styletron)
+function createNano () {
+  const nano = create()
+
+  cache(nano)
+  nesting(nano)
+  keyframes(nano)
+  rule(nano)
+  globalAddon(nano)
+
+  return nano
+}
+
+function configure (props) {
+  const tokens = {
+    ...defaults.tokens,
+    ...(props.tokens || {})
+  }
+  const theme = {
+    tokens,
+    shorthands: {
+      ...defaults.shorthands,
+      ...(props.shorthands || {})
+    },
+    macros: {
+      ...defaults.macros,
+      ...(props.macros || {})
+    },
+    variants: {
+      ...defaults.variants,
+      ...(props.variants || {})
+    }
+  }
+
+  context = {
+    theme,
+    ...hypostyle(theme)
   }
 }
 
-function getCss () {
-  return styletron.getCss()
+function css (style) {
+  return nano.rule(context.css(style))
 }
 
-function configure ({ theme: t }) {
-  context.theme = t ? { ...theme, ...t } : theme
+function injectGlobal (style) {
+  return nano.global(context.css(style))
+}
+
+function flush () {
+  context = {
+    theme: context.theme,
+    ...hypostyle(context.theme)
+  }
+
+  const raw = nano.raw
+
+  nano = createNano()
+
+  return raw
 }
 
 function Box ({
   as = 'div',
   class: cn = '',
   className: cN = '',
-  css,
+  css: block,
   ...props
 }) {
-  const { theme, toClassname } = context
-  const { style, attributes } = digest(props, theme)
+  const { css: parseHypostyle, pick, theme } = context
+
+  const cleaned = pick(props)
+  const styles = Object.keys(cleaned.styles || {}).length
+    ? parseHypostyle(cleaned.styles)
+    : undefined
+  const blockStyles = block
+    ? parseHypostyle(
+        typeof block === 'function' ? block(theme.tokens) : block || {}
+      )
+    : undefined
 
   return h(as, {
     class: [
       cn || '',
       cN || '',
-      toClassname(style),
-      css
-        ? toClassname(
-            toStyleObject(typeof css === 'function' ? css(theme) : css, theme)
-          )
-        : ''
+      styles && css(styles),
+      blockStyles && css(blockStyles)
     ]
       .filter(Boolean)
+      .map(s => s.trim())
       .join(' '),
-    ...attributes
+    ...cleaned.props
   })
 }
 
 module.exports = {
-  theme,
-  digest,
-  toStyleObject,
-  aliases,
-  getCss,
   configure,
-  Box
+  Box,
+  css,
+  injectGlobal,
+  keyframes: nano.keyframes,
+  flush
 }
