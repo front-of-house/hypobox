@@ -110,8 +110,10 @@ module.exports = (test, assert) => {
   })
 
   test('injectGlobal', () => {
-    injectGlobal({ '.global': { color: 'blue' } })
+    injectGlobal({ '.global': { c: 'blue' } })
 
-    assert(/global\s/.test(getCss()))
+    const css = getCss()
+
+    assert(/global(.|\n)+color:blue/.test(css))
   })
 }

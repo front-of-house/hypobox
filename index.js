@@ -51,7 +51,7 @@ function cxn (style) {
 }
 
 function injectGlobal (style) {
-  nano.global(style)
+  return nano.global(context.css(style))
 }
 
 // TODO will this leak?
