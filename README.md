@@ -3,8 +3,7 @@
 <br/>
 
 Hyper minimal [hyposcript](https://github.com/sure-thing/hyposcript) `Box`
-component, built with [hypostyle](https://github.com/sure-thing/hypostyle) and
-[nano-css](https://github.com/streamich/nano-css).
+component, built with [hypostyle](https://github.com/sure-thing/hypostyle).
 
 ```bash
 npm i hypobox
@@ -13,7 +12,9 @@ npm i hypobox
 #### Example
 
 ```jsx
-<Box f aic fw>
+import { Box } from 'hypobox'
+
+;<Box f aic fw>
   <Box w={[1, 1 / 2]}>
     <H1 c='#333'>Hello world!</H1>
   </Box>
@@ -21,7 +22,9 @@ npm i hypobox
     <Box
       as='button'
       c='#333'
-      css={tokens => ({ '&:hover': { color: tomato; } })}
+      css={tokens => ({
+        '&:hover': { color: 'tomato' }
+      })}
     >
       Click Me
     </Box>
@@ -29,91 +32,81 @@ npm i hypobox
 </Box>
 ```
 
-## Overview
+## Usage
 
-> **Note**, all examples here will assume JSX usage. For information on how to
-> set that up, check out the
-> [hyposcript README](https://github.com/sure-thing/hyposcript#jsx).
-
-Hypobox uses [hypostyle](https://github.com/sure-thing/hypostyle) internally,
-and so supports the full API of hypostyle. Values provided here will be
-_merged_ with the hypostyle [defaults](https://github.com/sure-thing/hypostyle#recommended-defaults).
+By default, `hypobox` provisions a default `hypostyle` instance for you, using
+`hypostyle`'s [default presets](https://github.com/sure-thing/hypostyle#presets).
+To customize this, configure a custom `hypostyle` instance, optionally merging in
+the default preset:
 
 ```javascript
-import { configure, Box } from 'hypobox'
+import { hypostyle } from 'hypostyle'
+import presets from 'hypostyle/presets'
+import { Box, configure } from 'hypobox'
 
-configure({
+const hypo = hypostyle({
+  ...presets,
   tokens: {
+    ...presets.tokens,
     color: {
       primary: '#ff4567'
     }
   },
   macros: {
-    border: {
-      border: '1px solid black'
+    outlined: {
+      border: '1px solid black',
     }
   }
 })
 
-<Box c='primary' border /> // => { color: '#ff4567', border: '1px solid black' }
+configure(hypo)
+
+<Box c='primary' outlined /> // => { color: '#ff4567', border: '1px solid black' }
 ```
 
-Note: if you plan to customize your implementation with `configure()`, you
-should do that before using `Box` or any of the utils.
+> **Note:** if you plan to customize your implementation with `configure()`, you
+> should do that before using `Box` or any of the utils.
 
-### Utils
+### Everything Else
 
-Hypobox also exposes some helpful utils.
-
-#### `css`
-
-Create ad-hoc style definitions, returning a classname.
-
-```javascript
-import { css } from 'hypobox'
-
-configure({ ... }) // configure first
-
-const cn = css({ c: 'blue' })
-```
-
-#### `injectGlobal`
-
-Create global CSS rules with the full flexibility of hypostyle.
-
-```javascript
-import { injectGlobal } from 'hypobox'
-
-configure({ ... }) // configure first
-
-injectGlobal({
-  '.classname': {
-    c: 'blue'
-  }
-})
-```
-
-#### `keyframes`
-
-Hypobox exports the `keyframes` helper from
-[nano-css](https://github.com/streamich/nano-css/blob/master/docs/keyframes.md).
-See those docs for more info.
+Create a `hypostyle` instance as above and use it for everything else. Refer to
+the [hypostyle docs](https://github.com/sure-thing/hypostyle) docs for more info
+on what's available.
 
 ### Server Rendering
 
-On the server, styles are collected by nano-css. After rendering, call `flush()`
-to retrieve generated CSS and clear memory.
+SSR is pretty similar to what you see in the
+[hypostyle](https://github.com/sure-thing/hypostyle#server-usage) docs.
+
+> **Note:** We recommend using a new `hypostyle` instance for each render to
+> ensure no styles are leaked into sequential requests.
 
 ```javascript
-import { Box, flush } from 'hypobox'
+import { hypostyle } from 'hypostyle'
+import presets from 'hypostyle/presets'
+import { Box, configure } from 'hypobox'
 
-const html = (
+const hypo = hypostyle(presets)
+
+configure(hypo)
+
+const body = (
   <Box f aic jcc>
     Flexy centered content
   </Box>
 )
 
-const css = flush()
+const stylesheet = hypo.flush()
+
+const html = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>${stylesheet}</style>
+  </head>
+  <body>${body}</body>
+</html>
+`
 ```
 
 ### License
