@@ -113,6 +113,7 @@ const html = `
 ### Related
 
 - [hyposcript](https://github.com/sure-thing/hyposcript)
+- [hypostyle](https://github.com/sure-thing/hypostyle)
 - [@hypobox/react](https://github.com/sure-thing/hypobox-react)
 - [styled-system](https://github.com/styled-system/styled-system)
 - [nano-css](https://github.com/streamich/nano-css)
