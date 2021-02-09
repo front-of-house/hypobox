@@ -2,6 +2,8 @@
 
 <br/>
 
+![npm](https://img.shields.io/npm/v/hypobox) [![](https://badgen.net/bundlephobia/minzip/hypobox)](https://bundlephobia.com/result?p=hypobox)
+
 Hyper minimal [hyposcript](https://github.com/sure-thing/hyposcript) `Box`
 component, built with [hypostyle](https://github.com/sure-thing/hypostyle).
 
@@ -13,7 +15,6 @@ npm i hypobox
 
 ```jsx
 import { Box } from 'hypobox'
-
 ;<Box f aic fw>
   <Box w={[1, 1 / 2]}>
     <H1 c='#333'>Hello world!</H1>
