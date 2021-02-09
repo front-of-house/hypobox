@@ -112,4 +112,4 @@ const html = `
 
 ### License
 
-MIT License © [Eric Bailey](https://estrattonbailey.com)
+MIT License © [Sure Thing](https://github.com/sure-thing)
