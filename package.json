@@ -38,10 +38,9 @@
     "prettier-standard": "^16.4.1",
     "semantic-release": "^17.2.1"
   },
-  "dependencies": {
+  "peerDependencies": {
     "hyposcript": "^1.0.1",
-    "hypostyle": "^2.3.0",
-    "nano-css": "^5.3.0"
+    "hypostyle": "^3.0.0"
   },
   "config": {
     "commitizen": {
