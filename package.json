@@ -34,6 +34,8 @@
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^4.2.5",
+    "hyposcript": "^1.0.2",
+    "hypostyle": "^3.0.0",
     "nodemon": "^2.0.4",
     "prettier-standard": "^16.4.1",
     "semantic-release": "^17.2.1"
@@ -46,5 +48,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "dependencies": {}
 }
