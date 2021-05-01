@@ -1,8 +1,6 @@
 const { h } = require('hyposcript')
-const { hypostyle } = require('hypostyle')
-const presets = require('hypostyle/presets')
 
-let hypo = hypostyle(presets)
+let hypo
 
 function configure (instance) {
   hypo = instance
