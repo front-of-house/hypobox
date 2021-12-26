@@ -1,8 +1,6 @@
-![hypobox](https://user-images.githubusercontent.com/4732330/96394851-af58f800-1188-11eb-8922-6a3a555d74fd.png)
+# hypobox
 
-<br/>
-
-![npm](https://img.shields.io/npm/v/hypobox) [![](https://badgen.net/bundlephobia/minzip/hypobox)](https://bundlephobia.com/result?p=hypobox)
+[![npm version](https://img.shields.io/npm/v/hypobox?style=flat&colorA=4488FF&colorB=4488FF)](https://www.npmjs.com/package/hypobox) [![test coverage](https://img.shields.io/coveralls/github/sure-thing/hypobox?style=flat&colorA=223355&colorB=223355)](https://coveralls.io/github/sure-thing/hypobox?branch=main) [![npm bundle size](https://badgen.net/bundlephobia/min/hypobox?color=223355&labelColor=223355)](https://bundlephobia.com/result?p=hypobox)
 
 Hyper minimal [hyposcript](https://github.com/sure-thing/hyposcript) `Box`
 component, built with [hypostyle](https://github.com/sure-thing/hypostyle).
@@ -17,14 +15,14 @@ npm i hypobox
 import { Box } from 'hypobox'
 ;<Box f aic fw>
   <Box w={[1, 1 / 2]}>
-    <H1 c='#333'>Hello world!</H1>
+    <H1 c="#333">Hello world!</H1>
   </Box>
   <Box w={[1, 1 / 2]}>
     <Box
-      as='button'
-      c='#333'
-      css={tokens => ({
-        '&:hover': { color: 'tomato' }
+      as="button"
+      c="#333"
+      css={(tokens) => ({
+        '&:hover': { color: 'tomato' },
       })}
     >
       Click Me
