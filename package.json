@@ -40,6 +40,6 @@
   },
   "dependencies": {
     "hyposcript": "^1.1.3",
-    "hypostyle": "^3.2.5"
+    "hypostyle": "^3.2.6"
   }
 }
