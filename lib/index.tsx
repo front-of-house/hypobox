@@ -1,5 +1,6 @@
 import { h, Props } from 'hyposcript'
-import { Hypostyle, HypostyleObject, HypostyleObjectOrFunction } from 'hypostyle'
+import { hypostyle, Hypostyle, HypostyleObject, HypostyleObjectOrFunction } from 'hypostyle'
+import * as presets from 'hypostyle/presets'
 
 export type As = keyof HTMLElementTagNameMap
 export type BoxProps = {
@@ -8,17 +9,17 @@ export type BoxProps = {
 } & HypostyleObject &
   Props
 
-let hypo: Hypostyle
+let hypo = hypostyle(presets)
 
 export function configure(hypostyle: Hypostyle) {
   hypo = hypostyle
 }
 
-export function Box({ as = 'div', className = '', cx, ...props }: BoxProps) {
-  if (!hypo) {
-    throw new Error('Hypobox is not configured')
-  }
+export function flush() {
+  return hypo.flush()
+}
 
+export function Box({ as = 'div', className = '', cx, ...props }: BoxProps) {
   var picked = hypo.pick<Omit<BoxProps, 'cx' | 'as'>>(props)
   var css = hypo.css({
     ...hypo.explode(picked.styles), // custom attr
@@ -36,10 +37,6 @@ export function Box({ as = 'div', className = '', cx, ...props }: BoxProps) {
 
 export function compose(Element: As | Function, styles: HypostyleObjectOrFunction) {
   return (props: BoxProps) => {
-    if (!hypo) {
-      throw new Error('Hypobox is not configured')
-    }
-
     var picked = hypo.pick<BoxProps>(props)
     var cx = {
       ...hypo.explode(styles), // base
