@@ -1,12 +1,20 @@
 {
-  "include": ["lib/index.tsx"],
+  "include": ["lib"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "lib": ["ES5", "dom"],
-    "target": "ES5",
+    "strict": true,
+    "target": "es2021",
+    "lib": ["es2021", "dom"],
+    "module": "es2022",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
     "declaration": true,
     "declarationDir": "./",
-    "jsx": "preserve",
+    "jsx": "react",
     "jsxFactory": "h",
     "jsxFragmentFactory": "h"
   }
